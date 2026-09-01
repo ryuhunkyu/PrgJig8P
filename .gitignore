@@ -1,0 +1,13 @@
+# MPLAB X build output
+**/build/
+**/dist/
+
+# MPLAB X private user settings
+**/nbproject/private/
+
+# Generated / temporary files
+*.o
+*.d
+*.hex
+*.elf
+*.map
