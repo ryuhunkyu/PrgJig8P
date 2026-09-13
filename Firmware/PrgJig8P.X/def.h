@@ -8,7 +8,7 @@
 #include <avr/wdt.h>
 
 #ifndef F_CPU
-#define F_CPU			8000000UL		// 8MHz 내부 클럭 사용
+#define F_CPU				8000000UL		// 8MHz 내부 클럭 사용
 #endif
 
 #include <xc.h>
@@ -27,8 +27,7 @@
                                 	
 #define	VERSION				0x0090
 #define	SYSTEMNAME			"MCU 8Port Programming Jig "
-#define	BUILDWEEK			0x2635			// 260828
-#define F_CPU				8000000UL		// 8MHz 내부 클럭 사용
+#define	BUILDWEEK			0x2637			// 260910
 #define	SERIALNUMBER			0x0001
                                 	
 #include "PrgJig8P.h"
@@ -40,9 +39,9 @@
 #define	PORT_Select2			PD3
 #define	PORT_Select1			PD4
 #define	PORT_Control			PD5
-#define	PORT_Button			PD6
+#define	PORT_Program			PD6
 #define	PORT_Test			PD7
-                                	
+
 #define	PORT_Mouse			PB1
 #define	PORT_Beep			PB2
 #define	PORT_Good			PB6
@@ -54,58 +53,38 @@
 #define	PORT_CLK			PC4
 #define	PORT_SDI			PC5
                                 	
-// port define                  	
+// Register Definition
 #define	GOOD_PORT			PORTB
 #define	BEEP_PORT			PORTB
 #define	MOUSE_PORT			PORTB
-#define	BUTTON_INPORT			PIND
+#define	PROGRAM_INPORT			PIND
 #define	CONTROL_INPORT			PIND
+#define	LATCH_PORT			PORTC
+#define	TEST_PORT			PORTD
                                	
 //<EEPRom Addr> Memory space:0x0000~0x0FFF
 #define	EEP_STATE			0x000
 #define	EEP_LEVEL			0x002
 #define	EEP_COMPARE			0x100
-                                	
+
 //Constant                      	
-#define	POWER_GOOD			434		//2.8V/6 * (1024/1.1V)
-#define	POWER_POOR			387		//2.5V
-#define	POWER_WEEK			356		//2.3V
-                                	
 #define	LED_ON				1
 #define	LED_OFF				0
-                                	
+
 #define	STATE_IDLE			0
 #define	STATE_COMPARE			1
 #define	STATE_PERFUSE			2
 #define	STATE_REST			3
-                                	
-//ADC Channel                   	
-#define	CHN_POWER			1
-#define	CHN_TEMPER_WIND			7
-#define	CHN_TEMPERATURE			6
-                                	
+
 #define	CHAR_NUMBER			0x00
 #define	CHAR_ALPHABET			0x0A
 #define	CHAR_DIGIT_ANI			0x24
 #define	CHAR_DASH			0x2A
 #define	CHAR_TEST			0x2B
 #define	CHAR_NONE			0x2C
-                                	
-#define	TEXT_S				0x6D
-#define	TEXT_E				0x79
-#define	TEXT_T				0x78
-#define	TEXT_B				0x7C
-#define	TEXT_O				0x5C
-#define	TEXT_D				0x5E
-#define	TEXT_Y				0x6E
-#define	TEXT_N				0x54
-#define	TEXT_F				0x71
-#define	TEXT_L				0x38
-#define	TEXT_DASH			0x40
-#define	TEXT_NONE			0x00
-                                	
+
 //Command                       	
-                                	
+
 //Code define                   	
 //#define	sbi(port,bit)		__asm__ __volatile__( "sbi %0, %1" : : "I" (_SFR_IO_ADDR(port)), "I" (bit))
 //#define	cbi(port,bit)		__asm__ __volatile__( "cbi %0, %1" : : "I" (_SFR_IO_ADDR(port)), "I" (bit))
@@ -117,33 +96,30 @@
 #define	NOP				asm( "nop" ::)
 #endif
 
+//Microchip 제공 함수 : CPU Clock Delay
+#define Delay1us()			__builtin_avr_delay_cycles(8)
+#define Delay10us()			__builtin_avr_delay_cycles(80)
+#define Delay100us()			__builtin_avr_delay_cycles(800)
 
-#define	VALVE_CLOSE			do{cbi(SOLBACKWARD_PORT, PORT_SolBackward);sbi(SOLFORWARD_PORT, PORT_SolForward);}while(0)
-#define	VALVE_OPEN			do{cbi(SOLFORWARD_PORT, PORT_SolForward);sbi(SOLBACKWARD_PORT, PORT_SolBackward);}while(0)
-#define	VALVE_STANDBY			do{cbi(SOLFORWARD_PORT, PORT_SolForward);cbi(SOLBACKWARD_PORT, PORT_SolBackward);}while(0)
-#define	BOOST_ON			sbi(BOOST_PORT, PORT_Boost)
-#define	BOOST_OFF			cbi(BOOST_PORT, PORT_Boost)
-#define	WINDGATE_OPEN			sbi(WINDGATE_PORT, PORT_WindGate)
-#define	WINDGATE_CLOSE			cbi(WINDGATE_PORT, PORT_WindGate)
-#define	VALVE_SLEEP			cbi(VALVESLEEP_PORT, PORT_ValveSleep)
-#define	VALVE_ENABLE			sbi(VALVESLEEP_PORT, PORT_ValveSleep)
-                                	
+//macro
+#define	ENABLE_INT0			EIMSK |= (1 << INT0)
+#define	DISABLE_INT0			EIMSK &= ~(1 << INT0)
+#define	ENABLE_INT1			EIMSK |= (1 << INT1)
+#define	DISABLE_INT1			EIMSK &= ~(1 << INT1)
+#define	ENABLE_INT2			EIMSK |= (1 << INT2)
+#define	DISABLE_INT2			EIMSK &= ~(1 << INT2)
+
+#define	FND_SDI_HIGH			sbi(SDI_PORT, PORT_SDI)
+#define	FND_SDI_LOW			cbi(SDI_PORT, PORT_SDI)
+#define	FND_CLK_HIGH			sbi(CLK_PORT, PORT_CLK)
+#define	FND_CLK_LOW			cbi(CLK_PORT, PORT_CLK)
+#define	FND_CLOCK			do{FND_CLK_HIGH;FND_CLK_LOW;} while(0)
+#define	FND_LATCH			do{sbi(LATCH_PORT, PORT_Latch); cbi(LATCH_PORT, PORT_Latch);} while(0)
+
 #define	KEY_BUTTON			((~BUTTON_INPORT)&(1<<PORT_Button))
-#define	WIND_CHECK			((~WINDCHECK_INPORT)&(1<<PORT_WindCheck))
-
-#define	ADC_REF				1100L	//1.1V * 1000mV
-#define	RLOW_THERM			1000L	//분압 고정저항
-
-// WDT 주기: 1초 (WDP2|WDP1)
-#define USE_POWER_DOWN_SLEEP		1	// 1이면 power-down, 0이면 power-save(타이머2사용시)
-
-#define	CMD_OPEN			1
-#define	CMD_CLOSE			0
+#define	KEY_CONTROL			((~CONTROL_INPORT)&(1<<PORT_Control))
 
 //------------------------------------
-
-
-//extern	u8	LevelPerfuse[];
 
 extern	u8	MCUState;
 extern	u8	OscState;

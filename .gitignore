@@ -11,3 +11,14 @@
 *.hex
 *.elf
 *.map
+
+# KiCad local settings / temporary files
+**/*.kicad_prl
+**/~*.lck
+**/*-backups/
+**/_autosave-*
+**/*.kicad_pcb-bak
+**/*.kicad_sch-bak
+
+# MPLAB X generated files
+**/.generated_files/

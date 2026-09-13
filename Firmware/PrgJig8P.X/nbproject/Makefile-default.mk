@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=Data.c Def.c Display.c Int.c PrgJig8P.c Sub.c Sys.c Test.c Uart.c
+SOURCEFILES_QUOTED_IF_SPACED=Def.c Display.c Int.c PrgJig8P.c Sub.c Sys.c Test.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Data.o ${OBJECTDIR}/Def.o ${OBJECTDIR}/Display.o ${OBJECTDIR}/Int.o ${OBJECTDIR}/PrgJig8P.o ${OBJECTDIR}/Sub.o ${OBJECTDIR}/Sys.o ${OBJECTDIR}/Test.o ${OBJECTDIR}/Uart.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/Data.o.d ${OBJECTDIR}/Def.o.d ${OBJECTDIR}/Display.o.d ${OBJECTDIR}/Int.o.d ${OBJECTDIR}/PrgJig8P.o.d ${OBJECTDIR}/Sub.o.d ${OBJECTDIR}/Sys.o.d ${OBJECTDIR}/Test.o.d ${OBJECTDIR}/Uart.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Def.o ${OBJECTDIR}/Display.o ${OBJECTDIR}/Int.o ${OBJECTDIR}/PrgJig8P.o ${OBJECTDIR}/Sub.o ${OBJECTDIR}/Sys.o ${OBJECTDIR}/Test.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Def.o.d ${OBJECTDIR}/Display.o.d ${OBJECTDIR}/Int.o.d ${OBJECTDIR}/PrgJig8P.o.d ${OBJECTDIR}/Sub.o.d ${OBJECTDIR}/Sys.o.d ${OBJECTDIR}/Test.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/Data.o ${OBJECTDIR}/Def.o ${OBJECTDIR}/Display.o ${OBJECTDIR}/Int.o ${OBJECTDIR}/PrgJig8P.o ${OBJECTDIR}/Sub.o ${OBJECTDIR}/Sys.o ${OBJECTDIR}/Test.o ${OBJECTDIR}/Uart.o
+OBJECTFILES=${OBJECTDIR}/Def.o ${OBJECTDIR}/Display.o ${OBJECTDIR}/Int.o ${OBJECTDIR}/PrgJig8P.o ${OBJECTDIR}/Sub.o ${OBJECTDIR}/Sys.o ${OBJECTDIR}/Test.o
 
 # Source Files
-SOURCEFILES=Data.c Def.c Display.c Int.c PrgJig8P.c Sub.c Sys.c Test.c Uart.c
+SOURCEFILES=Def.c Display.c Int.c PrgJig8P.c Sub.c Sys.c Test.c
 
 
 
@@ -88,12 +88,6 @@ MP_PROCESSOR_OPTION=ATmega48PA
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/Data.o: Data.c  .generated_files/flags/default/d66633f376596e3c35c4ae24e3fcbe0232e00c5d .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Data.o.d 
-	@${RM} ${OBJECTDIR}/Data.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1 -g -DDEBUG -D__MPLAB_DEBUGGER_SNAP=1 -gdwarf-2  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O0 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mno-const-data-in-progmem     -MD -MP -MF "${OBJECTDIR}/Data.o.d" -MT "${OBJECTDIR}/Data.o.d" -MT ${OBJECTDIR}/Data.o -o ${OBJECTDIR}/Data.o Data.c 
-	
 ${OBJECTDIR}/Def.o: Def.c  .generated_files/flags/default/914ea3579f56630340664df38244c9cf34e891c3 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/Def.o.d 
@@ -136,19 +130,7 @@ ${OBJECTDIR}/Test.o: Test.c  .generated_files/flags/default/fbf0dbe06fe7d94d060d
 	@${RM} ${OBJECTDIR}/Test.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1 -g -DDEBUG -D__MPLAB_DEBUGGER_SNAP=1 -gdwarf-2  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O0 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mno-const-data-in-progmem     -MD -MP -MF "${OBJECTDIR}/Test.o.d" -MT "${OBJECTDIR}/Test.o.d" -MT ${OBJECTDIR}/Test.o -o ${OBJECTDIR}/Test.o Test.c 
 	
-${OBJECTDIR}/Uart.o: Uart.c  .generated_files/flags/default/639f14b71757c0b1fae035e418f232cd1fd5533c .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Uart.o.d 
-	@${RM} ${OBJECTDIR}/Uart.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1 -g -DDEBUG -D__MPLAB_DEBUGGER_SNAP=1 -gdwarf-2  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O0 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mno-const-data-in-progmem     -MD -MP -MF "${OBJECTDIR}/Uart.o.d" -MT "${OBJECTDIR}/Uart.o.d" -MT ${OBJECTDIR}/Uart.o -o ${OBJECTDIR}/Uart.o Uart.c 
-	
 else
-${OBJECTDIR}/Data.o: Data.c  .generated_files/flags/default/1310bd5915c3279f34f23bd449f4d5021461feb0 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Data.o.d 
-	@${RM} ${OBJECTDIR}/Data.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O0 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mno-const-data-in-progmem     -MD -MP -MF "${OBJECTDIR}/Data.o.d" -MT "${OBJECTDIR}/Data.o.d" -MT ${OBJECTDIR}/Data.o -o ${OBJECTDIR}/Data.o Data.c 
-	
 ${OBJECTDIR}/Def.o: Def.c  .generated_files/flags/default/b197dd942b1a8c444d320bfa06daab05fe00f5da .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/Def.o.d 
@@ -190,12 +172,6 @@ ${OBJECTDIR}/Test.o: Test.c  .generated_files/flags/default/8979198206b2518311c6
 	@${RM} ${OBJECTDIR}/Test.o.d 
 	@${RM} ${OBJECTDIR}/Test.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O0 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mno-const-data-in-progmem     -MD -MP -MF "${OBJECTDIR}/Test.o.d" -MT "${OBJECTDIR}/Test.o.d" -MT ${OBJECTDIR}/Test.o -o ${OBJECTDIR}/Test.o Test.c 
-	
-${OBJECTDIR}/Uart.o: Uart.c  .generated_files/flags/default/b3b9b68d38073f7a3d30e1073184411797aa44d4 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Uart.o.d 
-	@${RM} ${OBJECTDIR}/Uart.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O0 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mno-const-data-in-progmem     -MD -MP -MF "${OBJECTDIR}/Uart.o.d" -MT "${OBJECTDIR}/Uart.o.d" -MT ${OBJECTDIR}/Uart.o -o ${OBJECTDIR}/Uart.o Uart.c 
 	
 endif
 

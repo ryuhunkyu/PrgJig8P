@@ -19,7 +19,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>Data.c</itemPath>
       <itemPath>Def.c</itemPath>
       <itemPath>Display.c</itemPath>
       <itemPath>Int.c</itemPath>
@@ -27,7 +26,6 @@
       <itemPath>Sub.c</itemPath>
       <itemPath>Sys.c</itemPath>
       <itemPath>Test.c</itemPath>
-      <itemPath>Uart.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

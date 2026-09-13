@@ -9,11 +9,11 @@ ISR(TIMER0_COMPA_vect)	// signal handler for tcnt0 overflow interrupt
 	tToggle = 1;
 
 	if(MiliTerm) --MiliTerm;
-	if(ValveTerm) --ValveTerm;
 	if(FNDTerm) --FNDTerm;
 	if(LEDTerm) --LEDTerm;
+	if(BeepTerm) -- BeepTerm;
 
-	sei();
+//	sei();
 }
 
 ISR(TIMER1_COMPA_vect)	// signal handler for tcnt1 overflow interrupt
@@ -21,27 +21,13 @@ ISR(TIMER1_COMPA_vect)	// signal handler for tcnt1 overflow interrupt
 	// timer1(16bit)는 1sec timer이다
 
 	++SecondCount;
-	if(PerfuseTerm) --PerfuseTerm;
-	if(RestTerm) --RestTerm;
 	if(TimeOut) --TimeOut;
-
-	ADMUX = (1<<REFS0) | (1<<REFS1) | adcChannel;	//ref:Internal 1.1V Voltage Reference
-	sbi(ADCSRA, ADSC);				//Start Convertion
 }
 
 //ISR(TIMER2_COMPA_vect)	// signal handler for tcnt2 overflow interrupt
 //{
 //
 //}
-
-ISR(WDT_vect)				//WDT 주기 인터럽트
-{
-	WDFlag = 1;
-}
-
-ISR(PCINT0_vect)			//PB4 Event
-{
-}
 
 //WindCheck
 //Button
